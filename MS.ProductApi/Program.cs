@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using MS.ProductApi.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,6 +11,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+var mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<AppDbContext>(opt => opt.UseMySql(
+    mySqlConnection,
+    ServerVersion.AutoDetect(mySqlConnection)));
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
