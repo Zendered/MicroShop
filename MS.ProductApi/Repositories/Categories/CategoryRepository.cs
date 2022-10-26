@@ -10,10 +10,9 @@ public class CategoryRepository : ICategoryRepository
     private readonly AppDbContext ctx;
     private readonly IMapper mapper;
 
-    public CategoryRepository(AppDbContext ctx, IMapper mapper)
+    public CategoryRepository(AppDbContext ctx)
     {
         this.ctx = ctx;
-        this.mapper = mapper;
     }
 
     public async Task<Category> Create(Category category)
@@ -33,7 +32,7 @@ public class CategoryRepository : ICategoryRepository
         var category = await ctx.Categories.FindAsync(id);
         return category;
     }
-    public async Task<IEnumerable<Category>> GetCategoriesProucts()
+    public async Task<IEnumerable<Category>> GetCategoriesProducts()
     {
         var category = await ctx.Categories
             .Include(c => c.Products)
