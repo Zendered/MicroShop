@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using MS.ProductApi.Context;
+using MS.ProductApi.Repositories.Categories;
+using MS.ProductApi.Repositories.Products;
+using MS.ProductApi.Services.Categories;
+using MS.ProductApi.Services.Products;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +14,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
 #region DBConnection
 var mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseMySql(
@@ -19,6 +21,15 @@ builder.Services.AddDbContext<AppDbContext>(opt => opt.UseMySql(
     ServerVersion.AutoDetect(mySqlConnection)));
 #endregion
 
+#region Scope
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+#endregion
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
