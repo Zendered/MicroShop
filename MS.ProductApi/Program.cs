@@ -10,10 +10,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+#region DBConnection
 var mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseMySql(
     mySqlConnection,
     ServerVersion.AutoDetect(mySqlConnection)));
+#endregion
 
 var app = builder.Build();
 
