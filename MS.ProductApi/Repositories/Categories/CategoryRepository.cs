@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MS.ProductApi.Context;
 using MS.ProductApi.Models;
 
@@ -8,7 +7,6 @@ namespace MS.ProductApi.Repositories.Categories;
 public class CategoryRepository : ICategoryRepository
 {
     private readonly AppDbContext ctx;
-    private readonly IMapper mapper;
 
     public CategoryRepository(AppDbContext ctx)
     {
